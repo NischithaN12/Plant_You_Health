@@ -24,8 +24,7 @@
         </mat-card-content>
         <mat-card-actions>
           <div class="getstarted">
-            <button mat-button matStepperNext (click)="goToLogin()">Get started</button>
-
+            <button matButton matStepperNext routerLink="/login">Get started</button>
           <mat-icon matSuffix>touch_app</mat-icon>
           </div>
         </mat-card-actions>
@@ -36,17 +35,16 @@
   <!-- Step 2: Routed Content (Login/Signup) -->
   <mat-step>
     <ng-template matStepLabel>Login/Signup</ng-template>
-    <router-outlet></router-outlet>
-          <div class="step-actions">
-
-        <button matButton matStepperPrevious (click)="goToLogin()">Back</button>
-        <button matButton matStepperNext (click)="goToProfile()">Next</button>
+      <Login_Signup></Login_Signup>
+      <div class="step-actions">
+      <button matButton matStepperPrevious routerLink="/login">Back</button>
+      <button matButton matStepperNext routerLink="/profile">Next</button>
       </div>
 </mat-step>
   <!-- Step 3: Done -->
   <mat-step>
     <ng-template matStepLabel>Start</ng-template>
-      <router-outlet></router-outlet>
+      <Profile_Setup></Profile_Setup>
       <div class="step-actions">
       <button matButton matStepperPrevious>Back</button>
       <button matButton (click)="stepper.reset()">Reset</button>
@@ -54,3 +52,4 @@
     
   </mat-step>
 </mat-stepper>
+</div>

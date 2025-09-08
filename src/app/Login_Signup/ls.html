@@ -1,0 +1,60 @@
+<div class="login-signup-container">
+  <mat-toolbar color="primary">
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+    <span class="spacer"></span>
+ 
+  </mat-toolbar>
+
+     <div class="example-container">
+        <p>
+  <mat-form-field appearance="fill">
+    <mat-label>Email/username</mat-label>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      [formControl]="email"
+      (blur)="updateErrorMessage()"
+      required
+    />
+    @if (email.invalid) {
+      <mat-error>{{errorMessage()}}</mat-error>
+    }
+    <mat-icon matSuffix>email</mat-icon>
+
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+</div>
+
+    <div class="example-container">
+    
+  <mat-form-field>
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide() ? 'password' : 'text'" 
+    
+    required/>
+
+  </mat-form-field>
+<!-- Add this below your form fields -->
+<section>
+  <div class="example-button-row">
+    <button matButton="elevated" >Login</button>
+    <button matButton="elevated" >Signin</button>
+  </div>
+  </section>
+  <p></p>
+  <section class="Social-media">
+    <div class="Social-media buttons">
+      <button mat-mini-fab color="primary" aria-label="Example icon button with a heart icon">
+        <mat-icon>facebook</mat-icon>
+      </button>
+  <button mat-mini-fab color="accent" aria-label="Google">
+  <mat-icon svgIcon="Google"></mat-icon>
+</button>
+<button mat-mini-fab color="warn" aria-label="Twitter">
+  <mat-icon svgIcon="Twitter"></mat-icon>
+</button>
+    </div>
+  </section>
+</div>

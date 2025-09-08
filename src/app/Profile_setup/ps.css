@@ -1,0 +1,31 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   /* takes full screen height */
+}
+
+.example-form {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  width: 300px; /* fixed width for better alignment */
+}
+
+

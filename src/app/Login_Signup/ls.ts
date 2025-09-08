@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule, MatToolbar } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,13 +28,14 @@ const Google = `
   selector: 'Login_Signup',
   templateUrl: 'ls.html',
   styleUrls: ['ls.css'],
-  imports: [MatFormFieldModule, MatButtonModule,MatInputModule, MatIconModule, MatToolbar,FormsModule, ReactiveFormsModule]
-  
+  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, MatIconModule, MatToolbar, FormsModule, ReactiveFormsModule]
+
 })
 export class Login_Signup {
-     readonly email = new FormControl('', [Validators.required, Validators.email]);
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
 
   errorMessage = signal('');
+  center: any;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -56,7 +57,7 @@ export class Login_Signup {
     } else {
       this.errorMessage.set('');
     }
-}
+  }
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {

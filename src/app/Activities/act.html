@@ -1,27 +1,57 @@
-
-<mat-tab-group>
+<!--<h3>Activities</h3>
+<mat-tab-group animationDuration="2000ms">
+<mat-tab label="All">Content 1</mat-tab>
+<mat-tab label="Exercise">Content 2</mat-tab>
+<mat-tab label="Hydration">Content 3</mat-tab>
+<mat-tab label="Yoga">Content 4</mat-tab>
+<mat-tab label="Food">Content 5</mat-tab>
+</mat-tab-group>-->
+ 
+<h3>Activities</h3>
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
+<mat-tab>
+<ng-template mat-tab-label>
+<mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      All
+</ng-template>
+<div *ngIf="loading">Loading activities...</div>
+<div *ngIf="error">{{ error }}</div>
+<ul *ngIf="!loading && !error">
+<li *ngFor="let activity of activities">{{ activity.name || (activity | json) }}</li>
+<li *ngIf="activities.length === 0">No activities found.</li>
+</ul>
+</mat-tab>
+ 
   <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-      First
-    </ng-template>
-    Content 1
-  </mat-tab>
-
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-      Second
-    </ng-template>
+<ng-template mat-tab-label>
+<mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Exercise
+</ng-template>
     Content 2
-  </mat-tab>
-
+</mat-tab>
+ 
   <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-      Third
-    </ng-template>
-
+<ng-template mat-tab-label>
+<mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Hydration
+</ng-template>
+ 
     Content 3
-  </mat-tab>
+</mat-tab>
+ 
+   <mat-tab>
+<ng-template mat-tab-label>
+<mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Yoga
+</ng-template>
+    Content 4
+</mat-tab>
+ 
+   <mat-tab>
+<ng-template mat-tab-label>
+<mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Food
+</ng-template>
+    Content 5
+</mat-tab>
 </mat-tab-group>

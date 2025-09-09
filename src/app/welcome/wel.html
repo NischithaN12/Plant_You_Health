@@ -1,5 +1,3 @@
-
-  <!-- Step 1: Welcome Card -->
   <div class="Welcome">
   <mat-stepper [linear]="isLinear" #stepper>
     <!-- Step 1: Welcome Card -->
@@ -50,7 +48,7 @@
     <ng-template matStepLabel>Start</ng-template>
       <Profile_Setup></Profile_Setup>
       <div class="step-actions step-actions-footer">
-      <button matButton matStepperPrevious>Back</button>
+      <button matButton matStepperPrevious routerLink="/profile">Back</button>
       <button matButton matStepperNext routerLink="/activities">Next</button>
       </div>
     

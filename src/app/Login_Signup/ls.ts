@@ -28,7 +28,7 @@ const Google = `
   selector: 'Login_Signup',
   templateUrl: 'ls.html',
   styleUrls: ['ls.css'],
-  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, MatIconModule, MatToolbar, FormsModule, ReactiveFormsModule]
+  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, MatIconModule, FormsModule, ReactiveFormsModule]
 
 })
 export class Login_Signup {

@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Welcome } from "./welcome/wel";
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,9 @@ import { Welcome } from "./welcome/wel";
     MatIconModule,
     MatButtonModule,
     Welcome,
-
+    RouterModule
 ]
 })
-export class App {}
+export class App {
+
+}

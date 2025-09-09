@@ -9,10 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { Login_Signup } from '../Login_Signup/ls';
 import { Profile_SetupComponent } from '../Profile_setup/ps';
+import { ActivitieSComponent } from '../Activities/act';
+import { App } from '../app';
 
 
 @Component({
   selector: 'welcome',
+  standalone: true,
     imports: [
     MatButtonModule,
     MatStepperModule,
@@ -25,11 +28,13 @@ import { Profile_SetupComponent } from '../Profile_setup/ps';
     RouterLink,
     Login_Signup,
     Profile_SetupComponent,
-    RouterModule
+    RouterModule,
+    
 ],
   templateUrl: './wel.html',
   styleUrl: './wel.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: []
 })
 
 export class Welcome{

@@ -1,5 +1,4 @@
-<div class="Welcome">
-<mat-stepper [linear]="isLinear" #stepper>
+
   <!-- Step 1: Welcome Card -->
   <div class="Welcome">
   <mat-stepper [linear]="isLinear" #stepper>
@@ -27,7 +26,8 @@
           </mat-card-content>
           <mat-card-actions>
             <div class="getstarted">
-              <button matButton matStepperNext routerLink="/login">Get started</button>
+              <button mat-button matStepperNext routerLink="/login">Get Started</button>
+
               <mat-icon matSuffix>touch_app</mat-icon>
             </div>
           </mat-card-actions>
@@ -51,11 +51,18 @@
       <Profile_Setup></Profile_Setup>
       <div class="step-actions step-actions-footer">
       <button matButton matStepperPrevious>Back</button>
-      <button matButton (click)="stepper.reset()">Reset</button>
       <button matButton matStepperNext routerLink="/activities">Next</button>
       </div>
     
   </mat-step>
+    <mat-step>
+    <ng-template matStepLabel>Activities</ng-template>
+      <router-outlet></router-outlet>
+      <div class="step-actions step-actions-footer">
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">Reset</button>
+      </div>
+      </mat-step>
 </mat-stepper>
 
 </div>

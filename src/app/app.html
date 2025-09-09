@@ -1,60 +1,4 @@
-<<<<<<< HEAD
-<div class="Welcome">
-  <mat-stepper [linear]="isLinear" #stepper>
-    <!-- Step 1: Welcome Card -->
-    <mat-step>
-      <ng-template matStepLabel>Welcome</ng-template>
-      <div class="center-container">
-        <mat-card class="example-card" appearance="outlined">
-          <mat-card-header>
 
-            <mat-card-title>🌱 Plant your Health</mat-card-title>
-            <mat-icon>plant</mat-icon>
-            <mat-card-subtitle> We welcome you</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-              Hey buddy 👋 Welcome to Plant Your Health! This is your little corner to track wellness, stay motivated,
-              and grow healthier every day 🌿.
-              Let’s make health fun and simple — just like chatting with a friend 💚.
-            </p>
-            <p style="text-align: center;">
-              Warm welcome to plant your health buddy!!
-              <mat-icon>favorite</mat-icon>
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-            <div class="getstarted">
-              <button matButton matStepperNext routerLink="/login">Get started</button>
-              <mat-icon matSuffix>touch_app</mat-icon>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-    </mat-step>
-
-    <!-- Step 2: Routed Content (Login/Signup) -->
-    <mat-step>
-      <ng-template matStepLabel>Login/Signup</ng-template>
-      <Login_Signup></Login_Signup>
-      <div class="step-actions">
-        <button matButton matStepperPrevious routerLink="/login">Back</button>
-        <button matButton matStepperNext routerLink="/profile">Next</button>
-      </div>
-    </mat-step>
-    <!-- Step 3: Done -->
-    <mat-step>
-      <ng-template matStepLabel>Start</ng-template>
-      <Profile_Setup></Profile_Setup>
-      <div class="step-actions">
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton (click)="stepper.reset()">Reset</button>
-      </div>
-
-    </mat-step>
-  </mat-stepper>
-</div>
-=======
 <mat-toolbar class="profile-toolbar" color="primary">
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
@@ -72,4 +16,4 @@
   </button>
 </mat-toolbar>
 <welcome></welcome>
->>>>>>> 6925f7c (Profile Page)
+

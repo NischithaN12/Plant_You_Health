@@ -1,3 +1,19 @@
 .mat-tab-group {
   margin-bottom: 48px;
 }
+
+.add-activity-btn {
+  float: right;
+  margin: 8px 0 16px 16px;
+  background: linear-gradient(90deg, #b2f7ef 0%, #cc88bb 100%);
+  color: #fff !important;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(204, 136, 187, 0.15);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.add-activity-btn:hover {
+  background: linear-gradient(90deg, #cc88bb 0%, #b2f7ef 100%);
+  box-shadow: 0 4px 16px rgba(204, 136, 187, 0.25);
+  color: #fff !important;
+}

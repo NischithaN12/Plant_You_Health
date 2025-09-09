@@ -1,5 +1,7 @@
-<<<<<<< HEAD
 <div class="Welcome">
+<mat-stepper [linear]="isLinear" #stepper>
+  <!-- Step 1: Welcome Card -->
+  <div class="Welcome">
   <mat-stepper [linear]="isLinear" #stepper>
     <!-- Step 1: Welcome Card -->
     <mat-step>
@@ -33,43 +35,28 @@
       </div>
     </mat-step>
 
-    <!-- Step 2: Routed Content (Login/Signup) -->
-    <mat-step>
-      <ng-template matStepLabel>Login/Signup</ng-template>
+
+  <!-- Step 2: Routed Content (Login/Signup) -->
+  <mat-step>
+    <ng-template matStepLabel>Login/Signup</ng-template>
       <Login_Signup></Login_Signup>
       <div class="step-actions">
-        <button matButton matStepperPrevious routerLink="/login">Back</button>
-        <button matButton matStepperNext routerLink="/profile">Next</button>
+      <button matButton matStepperPrevious routerLink="/login">Back</button>
+      <button matButton matStepperNext routerLink="/profile">Next</button>
       </div>
-    </mat-step>
-    <!-- Step 3: Done -->
-    <mat-step>
-      <ng-template matStepLabel>Start</ng-template>
+</mat-step>
+  <!-- Step 3: Done -->
+  <mat-step>
+    <ng-template matStepLabel>Start</ng-template>
       <Profile_Setup></Profile_Setup>
-      <div class="step-actions">
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton (click)="stepper.reset()">Reset</button>
+      <div class="step-actions step-actions-footer">
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">Reset</button>
+      <button matButton matStepperNext routerLink="/activities">Next</button>
       </div>
+    
+  </mat-step>
+</mat-stepper>
 
-    </mat-step>
-  </mat-stepper>
 </div>
-=======
-<mat-toolbar class="profile-toolbar" color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with home icon">
-    <mat-icon>home</mat-icon>
-  </button>
-  <span class="toolbar-title">Plant Your Health</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
-<welcome></welcome>
->>>>>>> 6925f7c (Profile Page)
+<!-- <activitie_s></activitie_s> -->

@@ -1,0 +1,49 @@
+.Welcome,
+mat-stepper {
+  min-height: 100vh;      /* Use min-height instead of height */
+  display: flex;
+  flex-direction: column;
+  overflow: auto;         /* Allow scrolling */
+}
+
+/* Target the actual step content wrapper */
+.mat-horizontal-stepper-content {
+  flex: 1;                       
+  display: flex;
+  align-items: center;           /* vertical center */
+  justify-content: center;       /* horizontal center */
+  padding: 16px;                 /* small breathing space */
+  box-sizing: border-box;
+}
+
+.center-container {
+  height: 100%;               /* take only available stepper space */
+  width: 40%;
+  display: flex;
+  margin-left: 31%;       /* center horizontally */
+  align-items: center;        /* vertical center */
+  justify-content: center;    /* horizontal center */
+  /*background: #f5f5f5;*/
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  box-sizing: border-box;
+  padding: 16px;     
+  margin-top: 10%;         /* optional breathing space */
+}
+
+.getstarted {
+  width: 100%;
+  display: flex;
+  justify-content: center;    /* center the button horizontally */
+  margin-top: 12px;           /* space above button */
+}
+
+.getstarted button {
+  padding: 8px 24px;          /* nicer button size */
+  font-weight: 500;
+}
+.step-actions {
+  display: flex;
+  justify-content: center; /* center all buttons */
+  gap: 20px;               /* equal spacing between them */
+  margin-top: 20px;
+}

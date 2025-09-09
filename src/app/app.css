@@ -1,49 +1,52 @@
-.Welcome,
-mat-stepper {
-  height: 100vh;                 /* full screen */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+
+
+@keyframes toolbarGlow {
+  0% {
+    box-shadow: 0 4px 24px 0 rgba(204, 136, 187, 0.18), 0 1.5px 8px 0 rgba(178, 247, 239, 0.10);
+  }
+  100% {
+    box-shadow: 0 8px 32px 0 rgba(204, 136, 187, 0.28), 0 3px 16px 0 rgba(178, 247, 239, 0.18);
+  }
 }
 
-/* Target the actual step content wrapper */
-.mat-horizontal-stepper-content {
-  flex: 1;                       
-  display: flex;
-  align-items: center;           /* vertical center */
-  justify-content: center;       /* horizontal center */
-  padding: 16px;                 /* small breathing space */
-  box-sizing: border-box;
+.toolbar-title {
+  font-family: 'Poppins', 'Roboto', 'Montserrat', Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-left: 24px;
+  color: #5a2d82;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.18);
+  transition: color 0.3s;
 }
 
-.center-container {
-  height: 100%;               /* take only available stepper space */
-  width: 40%;
-  display: flex;
-  margin-left: 31%;       /* center horizontally */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* horizontal center */
-  /*background: #f5f5f5;*/
-  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
-  box-sizing: border-box;
-  padding: 16px;     
-  margin-top: 10%;         /* optional breathing space */
+.toolbar-title:hover {
+  color: #cc88bb;
 }
 
-.getstarted {
-  width: 100%;
-  display: flex;
-  justify-content: center;    /* center the button horizontally */
-  margin-top: 12px;           /* space above button */
+.toolbar-icon {
+  color: #7b3e8e;
+  margin-right: 8px;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(204, 136, 187, 0);
 }
 
-.getstarted button {
-  padding: 8px 24px;          /* nicer button size */
-  font-weight: 500;
+.toolbar-icon:hover,
+.favorite-icon:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  transform: scale(1.15) rotate(-8deg);
+  box-shadow: 0 2px 12px rgba(204, 136, 187, 0.18);
 }
-.step-actions {
-  display: flex;
-  justify-content: center; /* center all buttons */
-  gap: 20px;               /* equal spacing between them */
-  margin-top: 20px;
+
+.favorite-icon mat-icon {
+  color: #e57373;
 }
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+

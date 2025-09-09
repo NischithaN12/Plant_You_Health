@@ -1,63 +1,126 @@
-<div class="center-container">
-  <mat-toolbar>
 
-    <h4>🌱 Plant Your Health</h4>
-    <span class="example-spacer"></span>
-    <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button matIconButton class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
-  <div class="form-container">
-    <form class="example-form">
+
+<div class="form-container">
+  <form class="example-form">
+    <h1 class="form-title">Profile</h1>
+
+    <!-- Name -->
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step() === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Personal data </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <mat-label>Full name</mat-label>
+      <input matInput [disabled]="formLocked"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput type="number" min="1" [disabled]="formLocked"/>
+    </mat-form-field>
+    <mat-action-row>
+      <button matButton (click)="nextStep()">Next</button>
+    </mat-action-row>
+ 
+
+    <!-- Gender -->
+    <div>
+      <label class="gender">Gender: </label>
+      <mat-radio-group [disabled]="formLocked">
+        <mat-radio-button value="female">Female</mat-radio-button>
+        <mat-radio-button value="male">Male</mat-radio-button>
+      </mat-radio-group>
+    </div>
+     </mat-expansion-panel>
+    <!--DOB-->
+  <mat-expansion-panel [expanded]="step() === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Date of Birth </mat-panel-title>
+      <mat-panel-description>
+        
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+
+
+        <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly />
+    </mat-form-field>
+    <mat-datepicker #picker></mat-datepicker>
+
+    <mat-action-row>
+      <button matButton (click)="prevStep()">Previous</button>
+      <button matButton (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+
+    <!-- Address -->
+       <mat-expansion-panel [expanded]="step() === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Address </mat-panel-title>
+      <mat-panel-description>
+        
+        <mat-icon>map</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <p>
       <mat-form-field class="example-full-width">
-        <mat-label>Company (disabled)</mat-label>
-        <input matInput disabled value="Siemens">
+        <mat-label>Address</mat-label>
+        <textarea matInput placeholder="Ex. 100 Main St" [disabled]="formLocked"></textarea>
       </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Address 2</mat-label>
+        <textarea matInput [disabled]="formLocked"></textarea>
+      </mat-form-field>
+    </p>
+        <mat-action-row>
+      <button matButton (click)="prevStep()">Previous</button>
+      <button matButton (click)="nextStep()">End</button>
+    </mat-action-row>
+  
 
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td><mat-form-field class="example-full-width">
-              <mat-label>First name</mat-label>
-              <input matInput required>
-            </mat-form-field></td>
-          <td><mat-form-field class="example-full-width">
-              <mat-label>Last Name</mat-label>
-              <input matInput required>
-            </mat-form-field></td>
-        </tr>
-      </table>
+    <!-- City, State, Postal -->
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="Ex. San Francisco" [disabled]="formLocked">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>State</mat-label>
+            <input matInput placeholder="Ex. California" [disabled]="formLocked">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Postal Code</mat-label>
+            <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" [disabled]="formLocked">
+            <mat-hint align="end">{{ postalCode.value.length || 0 }} / 5</mat-hint>
 
-      <p>
-        <mat-form-field class="example-full-width">
-          <mat-label>Address 1 </mat-label>
-          <textarea matInput placeholder="Ex. 100 Main St" required></textarea>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <mat-label>Address 2</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-      </p>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+</mat-expansion-panel>
+</mat-accordion>
 
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td><mat-form-field class="example-full-width">
-              <mat-label>City</mat-label>
-              <input matInput placeholder="Ex. San Francisco" required>
-            </mat-form-field></td>
-          <td><mat-form-field class="example-full-width">
-              <mat-label>State</mat-label>
-              <input matInput placeholder="Ex. California" required>
-            </mat-form-field></td>
-          <td><mat-form-field class="example-full-width">
-              <mat-label>Pin Code</mat-label>
-              <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" required>
-              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-            </mat-form-field></td>
-        </tr>
-      </table>
-    </form>
-  </div>
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onDone()" [disabled]="formLocked">Done</button>
+      <button mat-stroked-button color="accent" (click)="onEdit()" [disabled]="!formLocked">Edit</button>
+      
+    </div>
+  </form>
 </div>

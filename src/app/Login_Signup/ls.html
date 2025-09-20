@@ -1,49 +1,53 @@
 <div class="login-signup-container">
-  <span class="spacer"></span>
+  <h2 *ngIf="isLoginMode()">Login</h2>
+  <h2 *ngIf="!isLoginMode()">Signup</h2>
 
-  <p [align]="center">Logic</p>
-
-  <div class="example-container">
-    <p>
-      <mat-form-field appearance="fill">
-        <mat-label>Email/username</mat-label>
-        <input matInput placeholder="pat@example.com" [formControl]="email" (blur)="updateErrorMessage()" required />
-        @if (email.invalid) {
-        <mat-error>{{errorMessage()}}</mat-error>
-        }
-        <mat-icon matSuffix>email</mat-icon>
-
-        <mat-hint>Hint</mat-hint>
-      </mat-form-field>
-    </p>
-  </div>
-
-  <div class="example-container">
-
-    <mat-form-field>
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide() ? 'password' : 'text'" required />
-
+  <!-- Login Form -->
+  <form *ngIf="isLoginMode()" [formGroup]="loginForm" class="form-box">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Username / Email</mat-label>
+      <input matInput formControlName="usernameOrEmail">
     </mat-form-field>
-    <!-- Add this below your form fields -->
-    <section>
-      <div class="example-button-row">
-        <button matButton="elevated">Login</button>
-        <button matButton="elevated">Signin</button>
-      </div>
-    </section>
-    <p></p>
-    <section class="Social-media">
-      <div class="Social-media buttons">
-        <button mat-mini-fab color="primary" aria-label="Example icon button with a heart icon">
-          <mat-icon>facebook</mat-icon>
-        </button>
-        <button mat-mini-fab color="accent" aria-label="Google">
-          <mat-icon svgIcon="Google"></mat-icon>
-        </button>
-        <button mat-mini-fab color="warn" aria-label="Twitter">
-          <mat-icon svgIcon="Twitter"></mat-icon>
-        </button>
-      </div>
-    </section>
-  </div>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="togglePassword()" type="button">
+        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="full-width" (click)="login()">Login</button>
+
+    <p class="signup-link" [class.highlight]="loginFailed()" (click)="toggleMode()">
+      New user? Signup
+    </p>
+  </form>
+
+  <!-- Signup Form -->
+  <form *ngIf="!isLoginMode()" [formGroup]="signupForm" class="form-box">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="confirmPassword">
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" class="full-width" (click)="signup()">Signup</button>
+
+    <p class="signup-link" (click)="toggleMode()">Already have an account? Login</p>
+  </form>
+</div>

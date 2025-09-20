@@ -1,0 +1,50 @@
+/* Center container */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+  min-height: calc(100vh - 84px); /* full screen minus toolbar */
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #dcb5dd 0%, #cceae7 100%);
+}
+
+/* Card styling */
+.example-card mat-card-actions,
+.example-card .mat-mdc-card-actions {
+  display: flex;
+  justify-content: center;
+
+}
+.example-card{
+  width:600px;
+}
+/* Get Started button wrapper should take full width to center content */
+.getstarted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+}
+.getstarted button[mat-raised-button] {
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  color: #fff;
+border: none !important;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.getstarted button[mat-raised-button]:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

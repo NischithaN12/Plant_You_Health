@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Welcome } from './welcome/wel';
 import { RouterModule } from '@angular/router';
+import { MatCardModule } from "@angular/material/card";
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,12 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    Welcome,        // <-- import Welcome here
-    RouterModule
-  ]
+   
+    RouterModule,
+    MatCardModule,
+    HttpClientModule
+   
+]
 })
 export class App {
   

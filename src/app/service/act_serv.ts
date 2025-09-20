@@ -1,25 +1,180 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
+
+// --- Interfaces ---
+export interface Activity {
+  id: number;
+  name: string;
+  type: string;
+  suggested?: boolean;
+  points?: number;
+}
+
+export interface ActivityLog {
+  id: number;
+  activityId: number;
+  date: string;
+  points: number;
+  activityName?: string;
+}
+
+export interface Streak {
+  type: string;
+  currentStreak: number;
+  longestStreak: number;
+}
+
+export interface DailyPoints {
+  date: string;
+  points: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ActService {
-  private baseUrl = 'http://localhost:8080/api/activities';
+  private readonly baseUrl = 'http://localhost:8081/api/activities';
+  private readonly logUrl = 'http://localhost:8081/api/logs';
+  private readonly streakUrl = 'http://localhost:8081/api/streaks';
+  private readonly dashboardUrl = 'http://localhost:8081/api/dashboard';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getAllActivities(type?: string) {
-    return this.http.get<any[]>(this.baseUrl, { params: type ? { type } : {} });
+  // --- Activities CRUD ---
+  getAllActivities(type?: string): Observable<Activity[]> {
+    let params = new HttpParams();
+    if (type) {
+      params = params.set('type', type);
+    }
+    return this.http.get<Activity[]>(this.baseUrl, { params }).pipe(
+      catchError(err => {
+        console.error('Error fetching activities:', err);
+        return of([]);
+      })
+    );
   }
 
-  createActivity(activity: any): Observable<any> {
-    return this.http.post(this.baseUrl, activity);
+  createActivity(activity: Partial<Activity>): Observable<Activity> {
+    return this.http.post<Activity>(this.baseUrl, activity).pipe(
+      catchError(err => {
+        console.error('Error creating activity:', err);
+        return of(activity as Activity);
+      })
+    );
   }
 
-  updateActivity(id: number, activity: any) {
-    return this.http.put(`${this.baseUrl}/${id}`, activity);
+  updateActivity(id: number, activity: Partial<Activity>): Observable<Activity> {
+    return this.http.put<Activity>(`${this.baseUrl}/${id}`, activity).pipe(
+      catchError(err => {
+        console.error('Error updating activity:', err);
+        return of(activity as Activity);
+      })
+    );
   }
 
-  deleteActivity(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  deleteActivity(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
+      catchError(err => {
+        console.error('Error deleting activity:', err);
+        return of();
+      })
+    );
+  }
+
+  // --- Activity Logs (checkbox handling) ---
+  markDone(activityId: number): Observable<ActivityLog> {
+    return this.http.post<ActivityLog>(this.logUrl, { activityId }).pipe(
+      tap(() => this.triggerActivityUpdate()),
+      catchError(err => {
+        console.error('Error marking activity done:', err);
+        return of({ id: 0, activityId, date: '', points: 0 } as ActivityLog);
+      })
+    );
+  }
+
+  unmarkDone(activityId: number): Observable<void> {
+    return this.http.delete<void>(`${this.logUrl}/${activityId}`).pipe(
+      tap(() => this.triggerActivityUpdate()),
+      catchError(err => {
+        console.error('Error unmarking activity:', err);
+        return of();
+      })
+    );
+  }
+
+  getActivityLogs(startDate?: string, endDate?: string): Observable<ActivityLog[]> {
+    let params = new HttpParams();
+    if (startDate) params = params.set('from', startDate);
+    if (endDate) params = params.set('to', endDate);
+
+    return this.http.get<ActivityLog[]>(this.logUrl, { params }).pipe(
+      catchError(err => {
+        console.error('Error fetching activity logs:', err);
+        return of([]);
+      })
+    );
+  }
+
+  getTodayLogs(type?: string): Observable<ActivityLog[]> {
+  let params = new HttpParams();
+  // Only add type if it exists and is not 'All'
+  if (type && type !== 'ALL') params = params.set('type', type);
+
+  return this.http.get<ActivityLog[]>(`http://localhost:8081/api/logs/today`, { params }).pipe(
+    catchError(err => {
+      console.error('Error fetching today logs:', err);
+      return of([]);
+    })
+  );
+}
+
+
+  // --- Streaks ---
+  getAllStreaks(): Observable<Streak[]> {
+    return this.http.get<Record<string, Streak>>(this.streakUrl).pipe(
+      map(response =>
+        Object.entries(response).map(([type, streak]) => {
+          const { type: _type, ...rest } = streak;
+          return { type, ...rest };
+        })
+      ),
+      catchError(err => {
+        console.error('Error fetching streaks:', err);
+        return of([]);
+      })
+    );
+  }
+
+  getStreakByType(type: string): Observable<Streak> {
+    return this.http.get<Streak>(`${this.streakUrl}/${type}`).pipe(
+      catchError(err => {
+        console.error(`Error fetching streak for type ${type}:`, err);
+        return of({ type, currentStreak: 0, longestStreak: 0 } as Streak);
+      })
+    );
+  }
+
+  // --- Daily Points ---
+  getTodayPoints(): Observable<number> {
+    return this.http.get<number>(`${this.dashboardUrl}/points/today`).pipe(
+      catchError(err => {
+        console.error('Error fetching today points:', err);
+        return of(0);
+      })
+    );
+  }
+
+  getDailyPointsHistory(): Observable<DailyPoints[]> {
+    return this.http.get<DailyPoints[]>(`${this.dashboardUrl}/daily-points`).pipe(
+      catchError(err => {
+        console.error('Error fetching daily points history:', err);
+        return of([]);
+      })
+    );
+  }
+
+  // --- Helper ---
+  private triggerActivityUpdate(): void {
+    window.dispatchEvent(new CustomEvent('activity-updated'));
   }
 }

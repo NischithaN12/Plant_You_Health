@@ -1,52 +1,69 @@
+/* app.css */
 
-
-@keyframes toolbarGlow {
-  0% {
-    box-shadow: 0 4px 24px 0 rgba(204, 136, 187, 0.18), 0 1.5px 8px 0 rgba(178, 247, 239, 0.10);
-  }
-  100% {
-    box-shadow: 0 8px 32px 0 rgba(204, 136, 187, 0.28), 0 3px 16px 0 rgba(178, 247, 239, 0.18);
-  }
+/* Toolbar styling */
+.profile-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .toolbar-title {
-  font-family: 'Poppins', 'Roboto', 'Montserrat', Arial, sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: 1px;
-  margin-left: 24px;
-  color: #5a2d82;
-  text-shadow: 0 2px 8px rgba(255,255,255,0.18);
-  transition: color 0.3s;
+  margin-left: 16px;
+  flex-grow: 1;
 }
 
-.toolbar-title:hover {
-  color: #cc88bb;
-}
-
-.toolbar-icon {
-  color: #7b3e8e;
-  margin-right: 8px;
-  transition: background 0.2s, color 0.2s, transform 0.2s;
-  border-radius: 50%;
-  box-shadow: 0 0 0 rgba(204, 136, 187, 0);
-}
-
-.toolbar-icon:hover,
-.favorite-icon:hover {
-  background: rgba(255,255,255,0.18);
-  color: #fff;
-  transform: scale(1.15) rotate(-8deg);
-  box-shadow: 0 2px 12px rgba(204, 136, 187, 0.18);
-}
-
-.favorite-icon mat-icon {
-  color: #e57373;
+.example-icon {
+  margin: 0 4px;
 }
 
 .example-spacer {
   flex: 1 1 auto;
 }
 
+.favorite-icon mat-icon {
+  color: #e91e63; /* pink color for heart icon */
+}
+
+/* Center content below toolbar */
+router-outlet {
+  display: block;
+  margin-top: 20px;
+}
+
+/* Optional: general content wrapper */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card styling */
+.example-card {
+  max-width: 400px;
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+ 
+}
+
+.example-card mat-card-header mat-icon {
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.getstarted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
 
 

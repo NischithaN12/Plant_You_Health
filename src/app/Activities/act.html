@@ -1,139 +1,54 @@
-<h3>Activities</h3>
-
-<!-- Add new activity -->
-<div class="add-activity">
-      <input [(ngModel)]="newActivityName" placeholder="Enter activity name" />
-      <input [(ngModel)]="newActivityDescription" placeholder="Enter description" />
-      <label>
-            <input type="checkbox" [(ngModel)]="newActivitySuggested" />
-            Suggested
-      </label>
-      <button (click)="addActivity()">➕ Add</button>
-      <div class="error" *ngIf="addError">{{ addError }}</div>
+<!-- Add Activity Form -->
+<div *ngIf="currentType !== null" class="add-activity-form">
+  <input class="activity-input"
+         placeholder="Enter activity name"
+         [(ngModel)]="newActivityName">
+  <button class="add-btn" (click)="addActivity()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
+<!-- Tabs -->
 <mat-tab-group (selectedTabChange)="onTabChange($event)">
-      <mat-tab label="All">
-            <ng-template mat-tab-label>
-                  <mat-icon>list</mat-icon> All
-            </ng-template>
-            <div *ngIf="loading">Loading activities...</div>
-            <div class="error" *ngIf="fetchError">{{ fetchError }}</div>
-            <div class="error" *ngIf="editError">{{ editError }}</div>
-            <div class="error" *ngIf="deleteError">{{ deleteError }}</div>
-
-            <ul *ngIf="!loading && !fetchError">
-                  <li *ngFor="let activity of activities">
-                        <div *ngIf="editingId !== activity.id">
-                              <strong>{{ activity.name }}</strong> – {{ activity.description }}
-                              <span *ngIf="activity.suggested">⭐</span>
-                              <button (click)="startEdit(activity)">✏️ Edit</button>
-                              <button (click)="deleteActivity(activity.id)">🗑️ Delete</button>
-                        </div>
-                        <div *ngIf="editingId === activity.id">
-                              <input [(ngModel)]="editName" placeholder="Name" />
-                              <input [(ngModel)]="editDescription" placeholder="Description" />
-                              <label>
-                                    <input type="checkbox" [(ngModel)]="editSuggested" /> Suggested
-                              </label>
-                              <button (click)="saveEdit(activity)">💾 Save</button>
-                              <button (click)="cancelEdit()">❌ Cancel</button>
-                        </div>
-                  </li>
-                  <li *ngIf="activities.length === 0">No activities found.</li>
-            </ul>
-      </mat-tab>
-
-      <!-- Exercise, Hydration, Yoga, Food tabs are same as "All", but no fetchError -->
-      <mat-tab label="Exercise">
-            <ng-template mat-tab-label><mat-icon>fitness_center</mat-icon> Exercise</ng-template>
-            <ul>
-                  <li *ngFor="let activity of activities">
-                        <div *ngIf="editingId !== activity.id">
-                              <strong>{{ activity.name }}</strong> – {{ activity.description }}
-                              <span *ngIf="activity.suggested">⭐</span>
-                              <button (click)="startEdit(activity)">✏️ Edit</button>
-                              <button (click)="deleteActivity(activity.id)">🗑️ Delete</button>
-                        </div>
-                        <div *ngIf="editingId === activity.id">
-                              <input [(ngModel)]="editName" placeholder="Name" />
-                              <input [(ngModel)]="editDescription" placeholder="Description" />
-                              <label>
-                                    <input type="checkbox" [(ngModel)]="editSuggested" /> Suggested
-                              </label>
-                              <button (click)="saveEdit(activity)">💾 Save</button>
-                              <button (click)="cancelEdit()">❌ Cancel</button>
-                        </div>
-                  </li>
-            </ul>
-      </mat-tab>
-
-      <mat-tab label="Hydration">
-            <ng-template mat-tab-label><mat-icon>opacity</mat-icon> Hydration</ng-template>
-            <ul>
-                  <li *ngFor="let activity of activities">
-                        <div *ngIf="editingId !== activity.id">
-                              <strong>{{ activity.name }}</strong> – {{ activity.description }}
-                              <span *ngIf="activity.suggested">⭐</span>
-                              <button (click)="startEdit(activity)">✏️ Edit</button>
-                              <button (click)="deleteActivity(activity.id)">🗑️ Delete</button>
-                        </div>
-                        <div *ngIf="editingId === activity.id">
-                              <input [(ngModel)]="editName" placeholder="Name" />
-                              <input [(ngModel)]="editDescription" placeholder="Description" />
-                              <label>
-                                    <input type="checkbox" [(ngModel)]="editSuggested" /> Suggested
-                              </label>
-                              <button (click)="saveEdit(activity)">💾 Save</button>
-                              <button (click)="cancelEdit()">❌ Cancel</button>
-                        </div>
-                  </li>
-            </ul>
-      </mat-tab>
-
-      <mat-tab label="Yoga">
-            <ng-template mat-tab-label><mat-icon>self_improvement</mat-icon> Yoga</ng-template>
-            <ul>
-                  <li *ngFor="let activity of activities">
-                        <div *ngIf="editingId !== activity.id">
-                              <strong>{{ activity.name }}</strong> – {{ activity.description }}
-                              <span *ngIf="activity.suggested">⭐</span>
-                              <button (click)="startEdit(activity)">✏️ Edit</button>
-                              <button (click)="deleteActivity(activity.id)">🗑️ Delete</button>
-                        </div>
-                        <div *ngIf="editingId === activity.id">
-                              <input [(ngModel)]="editName" placeholder="Name" />
-                              <input [(ngModel)]="editDescription" placeholder="Description" />
-                              <label>
-                                    <input type="checkbox" [(ngModel)]="editSuggested" /> Suggested
-                              </label>
-                              <button (click)="saveEdit(activity)">💾 Save</button>
-                              <button (click)="cancelEdit()">❌ Cancel</button>
-                        </div>
-                  </li>
-            </ul>
-      </mat-tab>
-
-      <mat-tab label="Food">
-            <ng-template mat-tab-label><mat-icon>restaurant</mat-icon> Food</ng-template>
-            <ul>
-                  <li *ngFor="let activity of activities">
-                        <div *ngIf="editingId !== activity.id">
-                              <strong>{{ activity.name }}</strong> – {{ activity.description }}
-                              <span *ngIf="activity.suggested">⭐</span>
-                              <button (click)="startEdit(activity)">✏️ Edit</button>
-                              <button (click)="deleteActivity(activity.id)">🗑️ Delete</button>
-                        </div>
-                        <div *ngIf="editingId === activity.id">
-                              <input [(ngModel)]="editName" placeholder="Name" />
-                              <input [(ngModel)]="editDescription" placeholder="Description" />
-                              <label>
-                                    <input type="checkbox" [(ngModel)]="editSuggested" /> Suggested
-                              </label>
-                              <button (click)="saveEdit(activity)">💾 Save</button>
-                              <button (click)="cancelEdit()">❌ Cancel</button>
-                        </div>
-                  </li>
-            </ul>
-      </mat-tab>
+  <mat-tab label="All"></mat-tab>
+  <mat-tab label="Exercise"></mat-tab>
+  <mat-tab label="Hydration"></mat-tab>
+  <mat-tab label="Yoga"></mat-tab>
+  <mat-tab label="Food"></mat-tab>
 </mat-tab-group>
+
+<!-- Loading & Error -->
+<div *ngIf="loading" class="loading">Loading activities...</div>
+<div *ngIf="fetchError" class="error">{{ fetchError }}</div>
+
+<!-- Activity List -->
+<div *ngIf="!loading && activities.length" class="activity-list">
+  <div *ngFor="let act of activities"
+       class="activity-item"
+       [class.completed]="completedIds.has(+act.id)">
+    
+    <!-- Left: Checkbox + Name -->
+    <div class="activity-left">
+      <input type="checkbox"
+             [checked]="completedIds.has(+act.id)"
+             (change)="toggleDone(act)">
+      <span class="activity-name">{{ act.name }}</span>
+    </div>
+
+    <!-- Right: Bonus + Actions -->
+    <div class="activity-right">
+      <div *ngIf="act.suggested" class="bonus-badge">
+        <mat-icon class="bonus-icon">emoji_events</mat-icon>
+        +5
+      </div>
+      <button *ngIf="!act.suggested" class="icon-btn" (click)="startEdit(act)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="!act.suggested" class="icon-btn" (click)="deleteActivity(act)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && !activities.length">No activities found.</div>

@@ -1,126 +1,93 @@
-.example-spacer {
-  flex: 1 1 auto;
-}
-mat-toolbar{
-    width:300px ;
-}
-.example-container mat-form-field + mat-form-field {
-  margin-left: 8px;
-}
-/* You can add this to ls.css or your component's CSS */
-mat-form-field {
-  width: 300px; /* Set to your desired width */
-}
-body, .full-center {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* 🌈 Full-page gradient background */
+:host, body, html {
+
+  height: 90%;
+  display: grid;
+  place-items: center; /* centers the card */
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+/* 📦 Centered login/signup card */
 .login-signup-container {
+  max-width: 420px;
+  width: 100%;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 350px;
-  height: 50vh;
-    background: linear-gradient(135deg,   #cc88bb, #b2f7ef 100%);
-  border-radius: 18px;
-  border: 1.5px solid #bf7db2;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 24px 16px;
-  margin: 40px auto 0 auto; /* 40px space at the top */
-}
-.example-button-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 16px; /* optional for spacing */
-  gap: 16px; 
-}
-.socials {
-    display: flex;
-    gap: 14px;
-    margin: 14px 0 8px;
-}
-.social {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: none;
-    background: #eef1f4;
-    font-weight: 700;
-    cursor: pointer;
-}
-.social-media {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-.social-buttons {
-  display: flex;
-  gap: 18px;
-}
-
-.social button.social {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: box-shadow 0.2s, transform 0.2s;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.social.fb mat-icon, .social.fb {
-  color: #1877f3;
-}
-.social.g mat-icon, .social.g {
-  color: #ea4335;
-}
-.social.in mat-icon, .social.in {
-  color: #0077b5;
-}
-
-.social button.social:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.16);
-  transform: translateY(-2px) scale(1.07);
-  background: #f5f5f5;
-}
-.Social-media {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-.Social-media.buttons {
-  display: flex;
-  gap: 18px; /* Adjust for more or less space */
-  justify-content: center;
-  align-items: center;
-}
-.Social-media .Social-media.buttons {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
-  align-items: center;
-}
-.center-container {
-  height: 100%;               /* take only available stepper space */
-  width: 40%;
-  display: flex;
-  margin-left: 31%;       /* center horizontally */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* horizontal center */
-  /*background: #f5f5f5;*/
-  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  align-items: stretch;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease-in-out;
   box-sizing: border-box;
-  padding: 16px;     
-  margin-top: 10%;         /* optional breathing space */
+}
+
+/* ✨ Heading style */
+.login-signup-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+/* 📑 Form styling */
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* 🔗 Toggle links */
+.signup-link {
+  cursor: pointer;
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+  color: #3f51b5;
+  transition: all 0.3s ease;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+  color: #673ab7;
+}
+
+.signup-link.highlight {
+  color: #e53935;
+  font-weight: 600;
+}
+
+/* 🎨 Buttons */
+button[mat-raised-button] {
+  padding: 10px 0;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* Primary button */
+button[color="primary"] {
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button[color="primary"]:hover {
+  opacity: 0.95;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

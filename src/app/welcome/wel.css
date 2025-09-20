@@ -1,49 +1,54 @@
-.Welcome,
+/* Ensure stepper takes full screen height */
 mat-stepper {
-  min-height: 100vh;      /* Use min-height instead of height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: auto;         /* Allow scrolling */
+  overflow: auto; /* allow scrolling if needed */
+  background: var(--mat-app-background-color, #fafafa);
 }
 
-/* Target the actual step content wrapper */
+/* Step content area */
 .mat-horizontal-stepper-content {
-  flex: 1;                       
+  flex: 1;
   display: flex;
-  align-items: center;           /* vertical center */
-  justify-content: center;       /* horizontal center */
-  padding: 16px;                 /* small breathing space */
+  align-items: center;   /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  padding: 24px;
   box-sizing: border-box;
 }
 
+/* Central container */
 .center-container {
-  height: 100%;               /* take only available stepper space */
-  width: 40%;
+  flex: 0 1 480px;  /* max width ~480px, auto shrink */
+  width: 100%;
   display: flex;
-  margin-left: 31%;       /* center horizontally */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* horizontal center */
-  /*background: #f5f5f5;*/
-  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
-  box-sizing: border-box;
-  padding: 16px;     
-  margin-top: 10%;         /* optional breathing space */
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  
+  background: var(--mat-app-background-color, #fff);
+  border-radius: 16px;
+  box-shadow: var(--mat-elevation-z4, 0px 2px 8px rgba(0,0,0,0.2));
+  padding: 32px;
 }
 
+/* Get started button wrapper */
 .getstarted {
   width: 100%;
   display: flex;
-  justify-content: center;    /* center the button horizontally */
-  margin-top: 12px;           /* space above button */
+  justify-content: center;
+  margin-top: 16px;
 }
 
 .getstarted button {
-  padding: 8px 24px;          /* nicer button size */
+  padding: 10px 28px;
   font-weight: 500;
 }
+
+/* Step actions (Next/Back) */
 .step-actions {
   display: flex;
-  justify-content: center; /* center all buttons */
-  gap: 20px;               /* equal spacing between them */
-  margin-top: 20px;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
 }

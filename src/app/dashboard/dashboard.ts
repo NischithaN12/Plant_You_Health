@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ActService } from '../service/act_serv';
+import { ActService, DailyPoints } from '../service/act_serv';
 import { firstValueFrom } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,10 +18,9 @@ export class Dashboard implements OnInit {
   private actService = inject(ActService);
 
   // Plant growth
-  totalPoints: number = 0;
-  plantStage: number = 0;
-  plantEmoji: string = '🟫';
-
+  totalPoints = 0;
+  plantStage = 0;
+  plantEmoji = '🟫';
   plantStages = [
     { stage: 0, emoji: '🟫', name: 'Land', threshold: 0 },
     { stage: 1, emoji: '🌱', name: 'Seed', threshold: 10 },
@@ -30,51 +29,50 @@ export class Dashboard implements OnInit {
     { stage: 4, emoji: '🌷', name: 'Flower', threshold: 200 },
     { stage: 5, emoji: '🌳', name: 'Tree', threshold: 300 }
   ];
-  
-  // UI state
-  loading: boolean = true;
-  error: string = '';
+
+  loading = true;
+  error = '';
+
+  // Weekly calendar
+  currentWeekStart!: Date;
+  weekDays: string[] = [];
+  dailyPointsMap: Record<string, number> = {};
+  selectedDay = '';
 
   async ngOnInit() {
-    console.log('Dashboard initializing...');
+    this.currentWeekStart = this.getStartOfWeek(new Date());
     try {
       await this.fetchData();
-      console.log('Data fetched successfully', {
-        totalPoints: this.totalPoints,
-        plantStage: this.plantStage
-      });
-      
-      // Listen for activity updates (checkbox changes)
+      this.generateWeekDays();
       window.addEventListener('activity-updated', this.handleActivityUpdate);
     } catch (err) {
-      console.error('Error in ngOnInit:', err);
+      console.error(err);
       this.error = 'Failed to load dashboard data';
     } finally {
       this.loading = false;
     }
   }
-  
-  // Handle activity updates from other components
-  handleActivityUpdate = async () => {
-    console.log('Activity update detected, refreshing dashboard data...');
-    await this.fetchData();
-  }
-  
+
   ngOnDestroy() {
     window.removeEventListener('activity-updated', this.handleActivityUpdate);
   }
 
-  async fetchData() {
-    console.log('Fetching dashboard data...');
-    try {
-      // ✅ Directly get today's total points from backend
-      this.totalPoints = await firstValueFrom(this.actService.getTodayPoints());
+  handleActivityUpdate = async () => await this.fetchData();
 
-      // ✅ Update plant growth stage
+  async fetchData() {
+    this.loading = true;
+    try {
+      this.totalPoints = await firstValueFrom(this.actService.getTodayPoints());
       this.updatePlantStage();
-      
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+
+      const dailyPoints: DailyPoints[] = await firstValueFrom(this.actService.getDailyPointsHistory());
+      this.dailyPointsMap = {};
+      dailyPoints.forEach(dp => {
+        const key = new Date(dp.date).toISOString().split('T')[0];
+        this.dailyPointsMap[key] = dp.points;
+      });
+    } catch (err) {
+      console.error(err);
       this.error = 'Failed to load data. Please try again.';
     } finally {
       this.loading = false;
@@ -89,27 +87,53 @@ export class Dashboard implements OnInit {
         break;
       }
     }
-    console.log('Plant stage updated:', {
-      stage: this.plantStage,
-      emoji: this.plantEmoji,
-      points: this.totalPoints
-    });
   }
 
   getProgressToNextStage(): number {
-    if (this.plantStage === this.plantStages.length - 1) {
-      return 100;
-    }
-    const currentThreshold = this.plantStages[this.plantStage].threshold;
-    const nextThreshold = this.plantStages[this.plantStage + 1].threshold;
-    const progress = ((this.totalPoints - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
-    return Math.min(Math.max(progress, 0), 100);
+    if (this.plantStage === this.plantStages.length - 1) return 100;
+    const curr = this.plantStages[this.plantStage].threshold;
+    const next = this.plantStages[this.plantStage + 1].threshold;
+    return Math.min(Math.max((this.totalPoints - curr) / (next - curr) * 100, 0), 100);
   }
 
   getNextStageName(): string {
-    if (this.plantStage === this.plantStages.length - 1) {
-      return 'Max Level';
+    return this.plantStage === this.plantStages.length - 1 ? 'Max Level' : this.plantStages[this.plantStage + 1].name;
+  }
+
+  // --- Calendar helpers ---
+  getStartOfWeek(date: Date): Date {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = day === 0 ? -6 : 1 - day; // Monday start
+    d.setDate(d.getDate() + diff);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  generateWeekDays() {
+    this.weekDays = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(this.currentWeekStart);
+      d.setDate(d.getDate() + i);
+      this.weekDays.push(d.toISOString().split('T')[0]);
     }
-    return this.plantStages[this.plantStage + 1].name;
+  }
+
+  prevWeek() {
+    this.currentWeekStart.setDate(this.currentWeekStart.getDate() - 7);
+    this.generateWeekDays();
+  }
+
+  nextWeek() {
+    this.currentWeekStart.setDate(this.currentWeekStart.getDate() + 7);
+    this.generateWeekDays();
+  }
+
+  selectDay(day: string) {
+    this.selectedDay = day;
+  }
+
+  getMonthName(): string {
+    return this.currentWeekStart.toLocaleString('default', { month: 'long', year: 'numeric' });
   }
 }

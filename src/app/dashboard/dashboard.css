@@ -1,4 +1,3 @@
-/* Dashboard container */
 .dashboard-container {
   padding: 20px;
   max-width: 800px;
@@ -13,124 +12,41 @@
   margin-top: 20px;
 }
 
-/* Loading state */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
+/* Plant card styles remain the same */
+.plant-card { width: 100%; max-width: 500px; margin: 0 auto; background: linear-gradient(135deg, rgba(205, 134, 206, 0.1), rgba(178, 247, 239, 0.1)); }
+.plant-content { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.plant-visual { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+.plant-emoji { font-size: 80px; line-height: 1; margin-bottom: 10px; }
+.plant-stage { font-size: 18px; font-weight: 500; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+.progress-container { width: 100%; max-width: 400px; margin-top: 20px; }
+.progress-bar { height: 10px; background-color: #e0e0e0; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%); border-radius: 4px; transition: width 0.5s ease; }
+.progress-text { text-align: center; margin-top: 8px; font-size: 14px; color: #555; }
+
+/* Calendar styles */
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; width: 100%; max-width: 600px; }
+.week-days { display: flex; gap: 12px; justify-content: center; }
+.day-card {
+background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  color: rgb(94, 10, 108);
+  width: 60px;
+  height: 90px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 40px;
-  text-align: center;
-  color: #555;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(205, 134, 206, 0.2);
-  border-radius: 50%;
-  border-top-color: #cd86ce;
-  animation: spin 1s ease-in-out infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Error message */
-.error-message {
-  text-align: center;
-  padding: 30px;
-  background: #ffebee;
-  border-radius: 8px;
-  margin: 20px auto;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.error-message mat-icon {
-  color: #f44336;
-  font-size: 36px;
-  width: 36px;
-  height: 36px;
-  margin-bottom: 16px;
-}
-
-.error-message button {
-  margin-top: 16px;
-}
-
-/* Plant card */
-.plant-card {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  background: linear-gradient(135deg, rgba(205, 134, 206, 0.1), rgba(178, 247, 239, 0.1));
-}
-
-.plant-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.plant-visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.plant-emoji {
-  font-size: 80px;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-
-.plant-stage {
-  font-size: 18px;
-  font-weight: 500;
-  color: #555;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Progress bar */
-.progress-container {
-  width: 100%;
-  max-width: 400px;
-  margin-top: 20px;
-}
-
-.progress-bar {
-  height: 10px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}
-
-.progress-text {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-  color: #555;
+.day-card:hover { transform: translateY(-5px); box-shadow: 0 6px 8px rgba(0,0,0,0.2); }
+.day-name { font-weight: 500; font-size: 14px; }
+.day-date { font-size: 22px; font-weight: bold; margin: 4px 0; }
+.day-points { font-size: 14px; }
+.selected-day { margin-top: 16px; font-weight: 500; font-family:'Times New Roman', Times, serif;}
+.plant-card mat-card-title, mat-card-subtitle{
+  font-family:'Times New Roman', Times, serif;
+  font-weight: 600;                   
+  font-size: 20px;                    
+  color: #4a148c;                  
 }

@@ -1,32 +1,30 @@
 <div class="dashboard-container">
-  <!-- Loading/Error States -->
+  <!-- Loading/Error -->
   <div *ngIf="loading" class="loading-overlay">
     <div class="spinner"></div>
     <p>Loading your health data...</p>
   </div>
-  
+
   <div *ngIf="error" class="error-message">
     <mat-icon>error</mat-icon>
     <p>{{ error }}</p>
     <button mat-button (click)="fetchData()">Try Again</button>
   </div>
 
-  <!-- Dashboard Content -->
+  <!-- Content -->
   <div *ngIf="!loading && !error" class="dashboard-content">
-    
-    <!-- Plant Growth Card -->
+
+    <!-- Plant Card -->
     <mat-card class="plant-card">
       <mat-card-header>
-        <mat-card-title>Your Plant Progress</mat-card-title>
-        <mat-card-subtitle>{{ plantStages[plantStage].name }} ({{ totalPoints }} points)</mat-card-subtitle>
+        <mat-card-title >Your Plant Progress</mat-card-title>
+        <mat-card-subtitle>{{ plantStages[plantStage].name }} ({{ totalPoints }} pts)</mat-card-subtitle>
       </mat-card-header>
-      
       <mat-card-content class="plant-content">
         <div class="plant-visual">
           <div class="plant-emoji">{{ plantEmoji }}</div>
           <div class="plant-stage">{{ plantStages[plantStage].name }}</div>
         </div>
-        
         <div class="progress-container">
           <div class="progress-bar">
             <div class="progress-fill" [style.width.%]="getProgressToNextStage()"></div>
@@ -37,5 +35,25 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <!-- Calendar -->
+    <div class="calendar-header">
+      <button mat-icon-button (click)="prevWeek()"><mat-icon>arrow_back</mat-icon></button>
+      <h2>{{ getMonthName() }}</h2>
+      <button mat-icon-button (click)="nextWeek()"><mat-icon>arrow_forward</mat-icon></button>
+    </div>
+
+    <div class="week-days">
+      <div *ngFor="let day of weekDays" class="day-card" (click)="selectDay(day)">
+        <div class="day-name">{{ day | date:'EEE' }}</div>
+        <div class="day-date">{{ day | date:'dd' }}</div>
+        <div class="day-points">{{ dailyPointsMap[day] || 0 }} pts</div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedDay" class="selected-day">
+      Points on {{ selectedDay | date:'dd MMM yyyy' }}: {{ dailyPointsMap[selectedDay] || 0 }}
+    </div>
+
   </div>
 </div>

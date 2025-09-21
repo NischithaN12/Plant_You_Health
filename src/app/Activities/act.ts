@@ -4,7 +4,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { ActService } from '../service/act_serv';
+import { ActService, Activity, ActivityLog } from '../service/act_serv';
 
 @Component({
   standalone: true,
@@ -18,7 +18,7 @@ export class act implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   currentType: string | null = null;
-  activities: any[] = [];
+  activities: Activity[] = [];
   completedIds = new Set<number>();
 
   loading = false;
@@ -42,37 +42,34 @@ export class act implements OnInit {
   }
 
   // ------------------ Load activities + logs ------------------
-loadActivitiesAndLogs(type: string | null = null) {
-  this.loading = true;
-  this.fetchError = '';
+  loadActivitiesAndLogs(type: string | null = null) {
+    this.loading = true;
+    this.fetchError = '';
 
-  forkJoin({
-    activities: this.actService.getAllActivities(type || undefined),
-    logs: this.actService.getTodayLogs(type || undefined) // pass the type here
-  }).subscribe({
-    next: ({ activities, logs }) => {
-      // ✅ Normalize activity IDs to numbers
-      this.activities = activities.map(act => ({
-        ...act,
-        id: Number(act.id)
-      }));
+    forkJoin({
+      activities: this.actService.getAllActivities(type || undefined),
+      logs: this.actService.getLogs('today', type || undefined)
+    }).subscribe({
+      next: ({ activities, logs }) => {
+        // Normalize IDs
+        this.activities = activities.map(act => ({ ...act, id: Number(act.id) }));
 
-      // ✅ Clear and rebuild completed IDs set
-      this.completedIds.clear();
-      logs.forEach(log => {
-        if (log.activityId != null) this.completedIds.add(Number(log.activityId));
-      });
+        // Rebuild completed IDs
+        this.completedIds.clear();
+        logs.forEach(log => {
+          if (log.activityId != null) this.completedIds.add(Number(log.activityId));
+        });
 
-      this.cd.detectChanges();
-      this.loading = false;
-    },
-    error: (err) => {
-      console.error('Error loading activities:', err);
-      this.fetchError = 'Failed to load activities';
-      this.loading = false;
-    }
-  });
-}
+        this.cd.detectChanges();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading activities:', err);
+        this.fetchError = 'Failed to load activities';
+        this.loading = false;
+      }
+    });
+  }
 
   // ------------------ Tab switching ------------------
   onTabChange(event: any) {
@@ -87,11 +84,11 @@ loadActivitiesAndLogs(type: string | null = null) {
   }
 
   // ------------------ Toggle checkbox ------------------
-  toggleDone(activity: any) {
+  toggleDone(activity: Activity) {
     const activityId = Number(activity.id);
     const isDone = this.completedIds.has(activityId);
 
-    // Optimistic UI update
+    // Optimistic UI
     if (isDone) this.completedIds.delete(activityId);
     else this.completedIds.add(activityId);
 
@@ -100,12 +97,9 @@ loadActivitiesAndLogs(type: string | null = null) {
       : this.actService.markDone(activityId);
 
     request$.subscribe({
-      next: () => {
-        // Dispatch event to update dashboard plant stage if needed
-        window.dispatchEvent(new Event('activity-updated'));
-      },
+      next: () => window.dispatchEvent(new Event('activity-updated')),
       error: () => {
-        // Rollback UI if API fails
+        // rollback on error
         if (isDone) this.completedIds.add(activityId);
         else this.completedIds.delete(activityId);
       }
@@ -132,21 +126,23 @@ loadActivitiesAndLogs(type: string | null = null) {
     });
   }
 
-  startEdit(activity: any) {
-    if (activity.suggested) return;
-    this.editingId = activity.id;
-    this.editName = activity.name;
-    this.editDescription = activity.description;
-    this.editSuggested = activity.suggested;
-  }
+startEdit(activity: Activity) {
+  if (activity.suggested) return;
 
-  saveEdit(activity: any) {
+  const newName = prompt('Enter new name for activity', activity.name);
+  if (!newName || newName.trim() === '' || newName === activity.name) return;
+
+  // Call your existing update method
+  this.editName = newName.trim();
+  this.saveEdit(activity);
+}
+
+
+  saveEdit(activity: Activity) {
     if (activity.suggested) return;
 
     const updated = {
       name: this.editName,
-      description: this.editDescription,
-      suggested: this.editSuggested,
       type: activity.type
     };
 
@@ -164,7 +160,7 @@ loadActivitiesAndLogs(type: string | null = null) {
     this.editError = '';
   }
 
-  deleteActivity(activity: any) {
+  deleteActivity(activity: Activity) {
     if (activity.suggested) return;
 
     this.actService.deleteActivity(activity.id).subscribe({

@@ -102,31 +102,22 @@ export class ActService {
     );
   }
 
-  getActivityLogs(startDate?: string, endDate?: string): Observable<ActivityLog[]> {
-    let params = new HttpParams();
-    if (startDate) params = params.set('from', startDate);
-    if (endDate) params = params.set('to', endDate);
+  getLogs(range: 'today' | 'all' = 'today', type?: string): Observable<ActivityLog[]> {
+  let params = new HttpParams()
+    .set('range', range); // tell backend which logs to fetch
 
-    return this.http.get<ActivityLog[]>(this.logUrl, { params }).pipe(
-      catchError(err => {
-        console.error('Error fetching activity logs:', err);
-        return of([]);
-      })
-    );
+  if (type && type !== 'ALL') {
+    params = params.set('type', type); // optional type filter
   }
 
-  getTodayLogs(type?: string): Observable<ActivityLog[]> {
-  let params = new HttpParams();
-  // Only add type if it exists and is not 'All'
-  if (type && type !== 'ALL') params = params.set('type', type);
-
-  return this.http.get<ActivityLog[]>(`http://localhost:8081/api/logs/today`, { params }).pipe(
+  return this.http.get<ActivityLog[]>(`${this.logUrl}`, { params }).pipe(
     catchError(err => {
-      console.error('Error fetching today logs:', err);
-      return of([]);
+      console.error(`Error fetching ${range} logs:`, err);
+      return of([]); // fallback to empty array
     })
   );
 }
+
 
 
   // --- Streaks ---
@@ -164,14 +155,15 @@ export class ActService {
     );
   }
 
-  getDailyPointsHistory(): Observable<DailyPoints[]> {
-    return this.http.get<DailyPoints[]>(`${this.dashboardUrl}/daily-points`).pipe(
-      catchError(err => {
-        console.error('Error fetching daily points history:', err);
-        return of([]);
-      })
-    );
-  }
+getDailyPointsHistory(): Observable<DailyPoints[]> {
+  return this.http.get<DailyPoints[]>(`${this.dashboardUrl}/daily-points`).pipe(
+    catchError(err => {
+      console.error('Error fetching daily points history:', err);
+      return of([]); // fallback to empty array
+    })
+  );
+}
+
 
   // --- Helper ---
   private triggerActivityUpdate(): void {

@@ -41,9 +41,10 @@
         <mat-icon class="bonus-icon">emoji_events</mat-icon>
         +5
       </div>
-      <button *ngIf="!act.suggested" class="icon-btn" (click)="startEdit(act)">
-        <mat-icon>edit</mat-icon>
-      </button>
+     <button *ngIf="!act.suggested" class="icon-btn" (click)="startEdit(act)">
+  <mat-icon>edit</mat-icon>
+</button>
+
       <button *ngIf="!act.suggested" class="icon-btn" (click)="deleteActivity(act)">
         <mat-icon>delete</mat-icon>
       </button>

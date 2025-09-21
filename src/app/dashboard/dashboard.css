@@ -26,20 +26,8 @@
 /* Calendar styles */
 .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; width: 100%; max-width: 600px; }
 .week-days { display: flex; gap: 12px; justify-content: center; }
-.day-card {
-background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
-  color: rgb(94, 10, 108);
-  width: 60px;
-  height: 90px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.day-card:hover { transform: translateY(-5px); box-shadow: 0 6px 8px rgba(0,0,0,0.2); }
+
+
 .day-name { font-weight: 500; font-size: 14px; }
 .day-date { font-size: 22px; font-weight: bold; margin: 4px 0; }
 .day-points { font-size: 14px; }
@@ -49,4 +37,24 @@ background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
   font-weight: 600;                   
   font-size: 20px;                    
   color: #4a148c;                  
+}
+.day-card {
+  padding: 10px;
+  margin: 4px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.day-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Highlight today's date */
+.day-card.today {
+  background: linear-gradient(135deg, #cd86ce 0%, #b2f7ef 100%);
+  color: white;
+  font-weight: 600;
 }

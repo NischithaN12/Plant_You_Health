@@ -136,4 +136,12 @@ export class Dashboard implements OnInit {
   getMonthName(): string {
     return this.currentWeekStart.toLocaleString('default', { month: 'long', year: 'numeric' });
   }
+  isToday(dateStr: string): boolean {
+  const today = new Date();
+  const date = new Date(dateStr);
+  return date.getFullYear() === today.getFullYear() &&
+         date.getMonth() === today.getMonth() &&
+         date.getDate() === today.getDate();
+}
+
 }

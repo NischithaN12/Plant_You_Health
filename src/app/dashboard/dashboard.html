@@ -44,12 +44,15 @@
     </div>
 
     <div class="week-days">
-      <div *ngFor="let day of weekDays" class="day-card" (click)="selectDay(day)">
-        <div class="day-name">{{ day | date:'EEE' }}</div>
-        <div class="day-date">{{ day | date:'dd' }}</div>
-        <div class="day-points">{{ dailyPointsMap[day] || 0 }} pts</div>
-      </div>
-    </div>
+  <div *ngFor="let day of weekDays" 
+       class="day-card" 
+       [class.today]="isToday(day)"
+       (click)="selectDay(day)">
+    <div class="day-name">{{ day | date:'EEE' }}</div>
+    <div class="day-date">{{ day | date:'dd' }}</div>
+    <div class="day-points">{{ dailyPointsMap[day] || 0 }} pts</div>
+  </div>
+</div>
 
     <div *ngIf="selectedDay" class="selected-day">
       Points on {{ selectedDay | date:'dd MMM yyyy' }}: {{ dailyPointsMap[selectedDay] || 0 }}
